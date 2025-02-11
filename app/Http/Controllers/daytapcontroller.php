@@ -141,4 +141,10 @@ class daytapcontroller extends Controller
 
     }
 
+    public function openChat(Request $request)
+    {
+        $chatID = $request->chatID;
+        
+        return redirect()->route('messages')->with('chatID', $chatID);
+    }
 }
