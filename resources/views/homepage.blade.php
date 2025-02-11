@@ -11,10 +11,22 @@
 
     <body class="bg-gradient-to-r shadow-sm from-indigo-500 via-purple-500 to-pink-500 flex justify-center items-center h-screen">
 
-        <div class="absolute top-5 left-5 bg-white rounded-3xl w-20 pl-5">
-            <img src="{{ URL::asset('/userPics/' . session('person_picture')) }}" class="w-10 h-10 rounded-l-3xl"> 
-            <h1><b>{{ session('person_name') }}</b></h1>
+        <div class="absolute top-5 left-5 ">
+            <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-3xl p-3 flex items-center space-x-3">
+            <img src="{{ URL::asset('/userPics/' . session('person_picture')) }}" class="w-12 h-12 rounded-full border-2 border-gray-300"> 
+            <h1 class="text-gray-900 font-semibold text-lg">{{ session('person_name') }}</h1>
+            </div>
+
+            <div class="bg-white/90 backdrop-blur-md shadow-lg rounded-3xl p-3 mt-5">
+                <a href="{{ route('messages') }}" class="flex items-center space-x-2 text-gray-900 font-semibold text-lg">
+                    <img src="{{ URL::asset('/img/bubble-chat.png') }}" class="w-6 h-6">
+                    <span>Messages</span>
+                </a>
+            </div>
+
+
         </div>
+
 
         <div class="absolute bottom-5 left-5">
         <form method="post" id="logout" action="{{ route('logout')}}">

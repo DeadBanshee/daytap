@@ -25,3 +25,5 @@ Route::post('/likeUser', [daytapcontroller::class, 'likeUser'])->name('likeUser'
 Route::post('/dislikeUser', [daytapcontroller::class, 'dislikeUser'])->name('dislikeUser');
 
 Route::get('/homepage', [daytapcontroller::class, 'homepage'])->name('homepage');
+
+Route::get('/messages', [daytapcontroller::class, 'messages'])->name('messages');

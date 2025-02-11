@@ -20,6 +20,21 @@ class daytapcontroller extends Controller
         return view ('createaccount');
     }
 
+    
+    public function messages(){
+
+
+        $matchlist = likes_matches::where(function($query) {
+            $query->where('liker_id', session('person_id'))
+                  ->orWhere('liked_id', session('person_id'));
+        })
+        ->where('match', 's') 
+        ->get();
+
+
+        return view('messages', ['matchlist' => $matchlist]);
+    }
+
     public function storeNewAccount(Request $request){
 
         if ($request->hasFile('image')) {
@@ -81,10 +96,6 @@ class daytapcontroller extends Controller
     }
 
     public function likeUser(Request $request){
-        $newLike = new likes_matches;
-        $newLike->liker_id = session('person_id');
-        $newLike->liked_id = $request->liked_person_id;
-        $newLike->save();
 
         
         $verifyMatch = likes_matches::where('liked_id', session('person_id'))
@@ -92,9 +103,20 @@ class daytapcontroller extends Controller
         ->first();
         
         if($verifyMatch !== null){
-            return redirect()->route('welcome')->with('message', 'Você deu um match amigão!');
+
+            $newLike = new likes_matches;
+            $newLike->liker_id = session('person_id');
+            $newLike->liked_id = $request->liked_person_id;
+            $newLike->match = 's';
+            $newLike->save();
+            return redirect()->route('messages')->with('message', 'Você deu um match amigão!');
 
         }else{
+            
+            $newLike = new likes_matches;
+            $newLike->liker_id = session('person_id');
+            $newLike->liked_id = $request->liked_person_id;
+            $newLike->save();
             return redirect()->route('homepage');
         }
 
