@@ -29,3 +29,7 @@ Route::get('/homepage', [daytapcontroller::class, 'homepage'])->name('homepage')
 Route::get('/messages', [daytapcontroller::class, 'messages'])->name('messages');
 
 Route::post('/openChat', [daytapcontroller::class, 'openChat'])->name('openChat');
+
+Route::get('/receiveMessages', [daytapcontroller::class, 'receiveMessages'])->name('receiveMessages');
+
+Route::post('/sendMessages', [daytapcontroller::class, 'sendMessages'])->name('sendMessages');

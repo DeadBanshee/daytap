@@ -8,6 +8,8 @@ use App\Models\Person;
 
 use App\Models\likes_matches;
 
+use App\Models\UserMessage;
+
 use Illuminate\Http\Request;
 
 class daytapcontroller extends Controller
@@ -18,21 +20,6 @@ class daytapcontroller extends Controller
 
     public function createAccount(){
         return view ('createaccount');
-    }
-
-    
-    public function messages(){
-
-
-        $matchlist = likes_matches::where(function($query) {
-            $query->where('liker_id', session('person_id'))
-                  ->orWhere('liked_id', session('person_id'));
-        })
-        ->where('match', 's') 
-        ->get();
-
-
-        return view('messages', ['matchlist' => $matchlist]);
     }
 
     public function storeNewAccount(Request $request){
@@ -141,10 +128,60 @@ class daytapcontroller extends Controller
 
     }
 
+    public function messages(){
+
+
+        $matchlist = likes_matches::where(function($query) {
+            $query->where('liker_id', session('person_id'))
+                  ->orWhere('liked_id', session('person_id'));
+        })
+        ->where('match', 's') 
+        ->get();
+
+
+        return view('messages', ['matchlist' => $matchlist]);
+    }
+
     public function openChat(Request $request)
     {
         $chatID = $request->chatID;
-        
-        return redirect()->route('messages')->with('chatID', $chatID);
+    
+        // Fetch chat history between the current user and the chat target
+        $messageHistory = UserMessage::where(function($query) use ($chatID) {
+            $query->where('sender_id', session('person_id'))
+                  ->where('receiver_id', $chatID);
+        })
+        ->orWhere(function($query) use ($chatID) {
+            $query->where('sender_id', $chatID)
+                  ->where('receiver_id', session('person_id'));
+        })
+        ->orderBy('created_at', 'asc')
+        ->get();
+    
+        // You can pass the message history to the view
+        return redirect()->route('messages')->with([
+            'chatID' => $chatID,
+            'messageHistory' => $messageHistory
+        ]);
     }
+
+    public function receiveMessages()
+    {
+        return UserMessage::where('receiver_id', session('person_id'))
+        ->where('created_at', '>', now()->subSeconds(5)) // Get recent messages
+        ->orderBy('created_at', 'desc')
+        ->get();
+    }
+
+    public function sendMessages(Request $request){
+            $message = UserMessage::create([
+                'sender_id' => session('person_id'),
+                'receiver_id' => $request->receiver_id,
+                'message' => $request->message,
+            ]);
+        
+            return response()->json($message);
+    }
+
+
 }
