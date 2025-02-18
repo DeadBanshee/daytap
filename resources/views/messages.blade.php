@@ -84,7 +84,7 @@
                         
                     @foreach(session('messageHistory') as $message)
                         <div class="flex justify-{{ $message->sender_id == session('person_id') ? 'end' : 'start' }} p-3">
-                            <div class="{{ $message->sender_id == session('person_id') ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900' }} p-3 rounded-lg w-fit max-w-[80%]">
+                            <div class="{{ $message->sender_id == session('person_id') ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900' }} break-words p-3 rounded-lg w-fit max-w-[80%]">
                                 {{ $message->message }}
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                         var messageDiv = document.createElement('div');
                         messageDiv.classList.add('flex', 'justify-end');
                         messageDiv.innerHTML = `
-                            <div class="bg-blue-500 text-white p-3 rounded-lg w-fit max-w-[80%]">
+                            <div class="bg-blue-500 text-white break-words p-3 rounded-lg w-fit max-w-[80%]">
                                 ${data.message}
                             </div>
                         `;
@@ -170,7 +170,7 @@
                             if (message.sender_id === parseInt(senderId)) {
                                 messageDiv.classList.add('flex', 'justify-end');
                                 messageDiv.innerHTML = `
-                                    <div class="bg-blue-500 text-white p-3 rounded-lg w-fit max-w-[80%]">
+                                    <div class="bg-blue-500 text-white break-words p-3 rounded-lg w-fit max-w-[80%]">
                                         ${message.message}
                                     </div>
                                 `;
