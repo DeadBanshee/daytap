@@ -22,11 +22,11 @@
                 </div>
                 <div class="flex flex-col mb-3 justify-center ">
                     <label for="senha"><b>Nova Senha</b></label>
-                    <input type="text" id="password" name="password" class="bg-gray-100 inset-shadow-sm h-10 w-60 inset-shadow-gray-300 rounded" placeholder=" Nova Senha">
+                    <input type="number" id="password" name="password" class="bg-gray-100 inset-shadow-sm h-10 w-60 inset-shadow-gray-300 rounded" placeholder=" Nova Senha">
                 </div>
                 <div class="flex flex-col mb-3 justify-center ">
                     <label for="senha"><b>Confirmar Nova Senha</b></label>
-                    <input type="text" class="bg-gray-100 inset-shadow-sm h-10 w-60 inset-shadow-gray-300 rounded" placeholder=" Nova Senha">
+                    <input type="number" class="bg-gray-100 inset-shadow-sm h-10 w-60 inset-shadow-gray-300 rounded" placeholder=" Nova Senha">
                 </div>
 
                 <label class="block">
